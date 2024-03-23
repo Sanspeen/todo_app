@@ -27,14 +27,44 @@ class _TodoListScreenState extends State<TodoListScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final List<TodoItem> _todos = [];
 
+  void _showAddTodoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Agregar Tarea'),
+          content: TextField(
+            controller: _taskController,
+            decoration: InputDecoration(
+              labelText: 'Nombre de la Tarea',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                _addTodo();
+                Navigator.of(context).pop();
+              },
+              child: Text('Agregar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _addTodo() {
     setState(() {
       String newTask = _taskController.text;
-      String newDescription = _descriptionController.text;
       if (newTask.isNotEmpty) {
-        _todos.add(TodoItem(task: newTask, description: newDescription, completed: false));
+        _todos.add(TodoItem(task: newTask, description: "", completed: false));
         _taskController.clear();
-        _descriptionController.clear();
       }
     });
   }
@@ -59,20 +89,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
       ),
       body: Column(
         children: <Widget>[
-          TextField(
-            controller: _taskController,
-            decoration: InputDecoration(
-              labelText: 'Tarea',
-            ),
-            onSubmitted: (_) => _addTodo(),
-          ),
-          TextField(
-            controller: _descriptionController,
-            decoration: InputDecoration(
-              labelText: 'Descripción',
-            ),
-            onSubmitted: (_) => _addTodo(),
-          ),
           SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
@@ -101,7 +117,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addTodo,
+        onPressed: () {
+          _showAddTodoDialog(context);
+        },
         tooltip: 'Agregar Tarea',
         child: Icon(Icons.add),
       ),
