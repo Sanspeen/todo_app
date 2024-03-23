@@ -23,16 +23,25 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
-  final TextEditingController _controller = TextEditingController();
-  final List<String> _todos = [];
+  final TextEditingController _taskController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final List<TodoItem> _todos = [];
 
   void _addTodo() {
     setState(() {
-      String newTodo = _controller.text;
-      if (newTodo.isNotEmpty) {
-        _todos.add(newTodo);
-        _controller.clear();
+      String newTask = _taskController.text;
+      String newDescription = _descriptionController.text;
+      if (newTask.isNotEmpty) {
+        _todos.add(TodoItem(task: newTask, description: newDescription, completed: false));
+        _taskController.clear();
+        _descriptionController.clear();
       }
+    });
+  }
+
+  void _toggleTodoComplete(int index) {
+    setState(() {
+      _todos[index].completed = !_todos[index].completed;
     });
   }
 
@@ -45,9 +54,16 @@ class _TodoListScreenState extends State<TodoListScreen> {
       body: Column(
         children: <Widget>[
           TextField(
-            controller: _controller,
+            controller: _taskController,
             decoration: InputDecoration(
-              labelText: 'Ingrese su tarea',
+              labelText: 'Tarea',
+            ),
+            onSubmitted: (_) => _addTodo(),
+          ),
+          TextField(
+            controller: _descriptionController,
+            decoration: InputDecoration(
+              labelText: 'Descripción',
             ),
             onSubmitted: (_) => _addTodo(),
           ),
@@ -57,7 +73,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
               itemCount: _todos.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(_todos[index]),
+                  title: Text(_todos[index].task),
+                  subtitle: Text(_todos[index].description),
+                  trailing: Checkbox(
+                    value: _todos[index].completed,
+                    onChanged: (_) => _toggleTodoComplete(index),
+                  ),
                 );
               },
             ),
@@ -71,4 +92,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
       ),
     );
   }
+}
+
+class TodoItem {
+  String task;
+  String description;
+  bool completed;
+
+  TodoItem({required this.task, required this.description, required this.completed});
 }
