@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '/main.dart'; // Cambia esto según la ubicación de tu clase TodoItem
+import '/main.dart';
+import 'todo_item_widget.dart';
 
 class TodoListWidget extends StatelessWidget {
   final List<TodoItem> todos;

@@ -7,12 +7,15 @@ class AddTaskButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        onPressed();
-      },
-      tooltip: 'Agregar Tarea',
-      child: Icon(Icons.add),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of the screen width
+      child: FloatingActionButton(
+        onPressed: () {
+          onPressed();
+        },
+        tooltip: 'Agregar Tarea',
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
