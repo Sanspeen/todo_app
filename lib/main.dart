@@ -45,6 +45,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
     });
   }
 
+  void _removeTodoItem(int index) {
+    setState(() {
+      _todos.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,9 +81,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 return ListTile(
                   title: Text(_todos[index].task),
                   subtitle: Text(_todos[index].description),
-                  trailing: Checkbox(
-                    value: _todos[index].completed,
-                    onChanged: (_) => _toggleTodoComplete(index),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Checkbox(
+                        value: _todos[index].completed,
+                        onChanged: (_) => _toggleTodoComplete(index),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () => _removeTodoItem(index),
+                      ),
+                    ],
                   ),
                 );
               },
