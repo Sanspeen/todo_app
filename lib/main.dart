@@ -40,14 +40,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo List'),
+        title: Text('Lista de Tareas'),
       ),
       body: Column(
         children: <Widget>[
           TextField(
             controller: _controller,
             decoration: InputDecoration(
-              labelText: 'Enter your task',
+              labelText: 'Ingrese su tarea',
             ),
             onSubmitted: (_) => _addTodo(),
           ),
@@ -66,7 +66,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTodo,
-        tooltip: 'Add Todo',
+        tooltip: 'Agregar Tarea',
         child: Icon(Icons.add),
       ),
     );
