@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import './widgets/add_task_button_widget.dart';
+import './widgets/todo_list_widget.dart';
 void main() {
   runApp(TodoApp());
 }
@@ -87,42 +88,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
       appBar: AppBar(
         title: Text('Lista de Tareas'),
       ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _todos.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_todos[index].task),
-                  subtitle: Text(_todos[index].description),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Checkbox(
-                        value: _todos[index].completed,
-                        onChanged: (_) => _toggleTodoComplete(index),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () => _removeTodoItem(index),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+      body: TodoListWidget(
+        todos: _todos,
+        toggleTodoComplete: _toggleTodoComplete,
+        removeTodoItem: _removeTodoItem,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddTodoDialog(context);
-        },
-        tooltip: 'Agregar Tarea',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: AddTaskButton(onPressed: () {
+        _showAddTodoDialog(context);
+      }),
     );
   }
 }
