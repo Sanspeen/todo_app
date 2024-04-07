@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class AddTaskDialog extends StatelessWidget {
+class AddTaskModal extends StatelessWidget {
   final TextEditingController taskController;
   final Function(String) onAdd;
 
-  const AddTaskDialog({
+  const AddTaskModal({
     Key? key,
     required this.taskController,
     required this.onAdd,
