@@ -33,7 +33,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AddTaskDialog(
+        return AddTaskModal(
           taskController: _taskController,
           onAdd: (newTask) {
             _addTodo(newTask);
